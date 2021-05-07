@@ -1,0 +1,357 @@
+function [solerr, solcell, solSercell] = arabid3lp_test
+% function [solerr, solcell, solSercell] = arabid3lp_test
+%
+% ARABID3LP_TEST  Test function for the BDE solver - 3-loop Arabidopsis model of Akman et al. 
+%
+% [solerr, solcell, solSercell] = arabid3lp_test
+% [~, ~, solSercell] = arabid3lp_test
+%
+% OUTPUTS 
+%
+% solerr: Vector of errors between the parallel and serial solutions across tests (calculated using continuous normalised Hamming distance).
+%
+% solcell/solSercell: Cells containing the solution structures returned by bdesolve/bdesolveserial, for each test (BOTH OPTIONAL). Each element
+%                     of solcell/solSercell is a structure sol/solSer with the following common fields -
+% sol(Ser).x: A vector containing the times of switch points.
+% sol(Ser).y: A matrix with n rows where n is the number of state variables. Each column is the state following each switch.
+% sol(Ser).history: The history used to generate the solution.
+% 
+% INPUTS
+%
+% None.
+%
+% MODEL
+%
+% The model equations are:
+%
+% LHY(t) = (X(t - tau_3) AND ~PRR(t - tau_8)) AND L1(t - tau_9),
+% TOC1(t) = ~LHY(t - tau_1) AND Y(t - tau_6),
+% X(t) = TOC1(t - tau_2),
+% Y(t) = (~LHY(t - tau_4) AND ~TOC1(t - tau_5)) AND (L2(t - tau_10) OR L3(t - tau_11)),
+% PRR(t) = LHY(t - tau_7) AND L4(t - tau_12),
+% L1(t) = L1(t - 24),
+% L2(t) = L2(t - 24),
+% L3(t) = L3(t - 24),
+% L4(t) = L4(t - 24).
+%
+% Reference: Akman, O.E., Watterson, S., Parton, A., Binns, N., Millar, A.J. & Ghazal, P. J. Roy. Soc. Interface, 9(74) (2012).
+%
+% DEPENDENCIES 
+%
+% bdesolve, bdesolveserial, arabid3lp_bmod, bdecut, bdedist, bdeplot, bdemerge.
+% 
+% SEE ALSO 
+%
+% arabid3lp_test_wplot.
+%
+% -------------------------------------------------------------------------
+%
+% Written by Ozgur Akman, University of Exeter, 2019
+% O.E.Akman@exeter.ac.uk
+%
+% Part of the BDEtools package, © Akman Laboratory of Automated Biotechnology, 2021
+%
+
+% Set the gates to 10011011011.
+
+gvec = [1 0 0 1 1 0 1 1 0 1 1];
+
+% Specify model.
+
+model = @(Z) arabid3lp_bmod(Z, gvec);
+
+% Set the delays.
+
+tau1 = 3; 
+tau2 = 6.5;
+tau3 = 8;
+tau4 = 0.7;
+tau5 = 5.9;
+tau6 = 3.5;
+tau7 = 6;
+tau8 = 5;
+tau9 = 0.5;
+tau10 = 3;
+tau11 = 0.5;
+tau12 = 5.6;
+
+% Set the light period.
+
+tau13 = 24;
+
+lags = [tau1 tau2 tau3 tau4 tau5 tau6 tau7 tau8 tau9 tau10 tau11 tau12];
+lagsall = [lags tau13];
+
+% Set the fixed light pulse parameters.
+
+p1=2;
+p3=0.5;
+p4=3;
+
+% Set the range over which to integrate.
+
+tEnd = 120;
+tRange = [0 tEnd];
+
+% Absorb the light period into the solution algorithms.
+
+bdesolvetest = @(modlags, inthistory, intRange) bdesolve(model, [modlags tau13], inthistory, intRange);
+bdesolveserialtest = @(modlags, solin, intRange) bdesolveserial(model, [modlags tau13], solin, intRange);
+
+% ------------------------------------------------------------ %
+% -------------------------- TEST 1 -------------------------- % 
+% ------------------------------------------------------------ %
+% Integrate from constant history in LL. 
+
+% Set the (constant) history in LL.
+
+history = [false; false; false; false; false; true; true; true; true];
+
+% Solve the equations.
+
+sol1 = bdesolvetest(lags, history, tRange);
+
+% Solve the equations serially.
+
+solSer1 = bdesolveserialtest(lags, sol1, tRange + max(lagsall));
+
+% Extract the coincident regions of the two solutions.
+
+[~, solCut1] = bdecut(sol1, solSer1.x(1));
+[solSerCut1, ~] = bdecut(solSer1, tRange(end));
+
+% Calculate the distance between the solutions (i.e. the integration error).
+
+[~, ~, solerr1] = bdedist(solCut1, solSerCut1);
+
+% ------------------------------------------------------------ %
+% -------------------------- TEST 2 -------------------------- % 
+% ------------------------------------------------------------ %
+% Integrate from limit cycle in LL. 
+
+% Extract the last section of the oscillation to use as the initial history.
+
+[~, sol1sec] = bdecut(sol1, sol1.x(end) - max(lagsall));
+sol1sec.x = sol1sec.x - sol1sec.x(1);
+
+% Solve the equations.
+
+sol2 = bdesolvetest(lags, sol1sec, tRange(end));
+
+% Solve the equations serially.
+
+solSer2 = bdesolveserialtest(lags, sol2, [sol2.x(1) + max(lagsall) tRange(end) + max(lagsall)]);
+
+% Extract the coincident regions of the two solutions.
+
+[~, solCut2] = bdecut(sol2, solSer2.x(1));
+[solSerCut2, ~] = bdecut(solSer2, tRange(end));
+
+% Calculate the distance between the solutions (i.e. the integration error).
+
+[~, ~, solerr2] = bdedist(solCut2, solSerCut2);
+
+% ------------------------------------------------------------ %
+% -------------------------- TEST 3 -------------------------- % 
+% ------------------------------------------------------------ %
+% Integrate from LL limit cycle in 12:12 LD. 
+
+% Extract the last section of the LL oscillation to use as the initial LD history.
+
+[~, sol2sec] = bdecut(sol2, sol2.x(end) - max(lagsall));
+sol2sec.x = sol2sec.x - sol2sec.x(1);
+
+% Generate the forcing functions.
+
+ldsol1 = ldcyc(sol2sec.x(end), 6, 6 + p1);
+ldsol2 = ldcyc(sol2sec.x(end), 6, 18);
+ldsol3 = ldcyc(sol2sec.x(end), 6, 6 + p3);
+ldsol4 = ldcyc(sol2sec.x(end), 6, 6 + p4);
+
+% Combine the forcing functions.
+
+ldsol = bdemerge(ldsol1, ldsol2);
+ldsol = bdemerge(ldsol, ldsol3);
+ldsol = bdemerge(ldsol, ldsol4);
+
+% Generate the history.
+
+sol2sec.y(end-3:end, :) = [];
+sol2secld = bdemerge(sol2sec, ldsol);
+
+% Initial integration.
+
+sol3 = bdesolvetest(lags, sol2secld, tRange(end));
+
+% Extract the last section of the oscillation to use as the new LD history.
+
+[~, sol3sec] = bdecut(sol3, sol3.x(end) - max(lagsall));
+sol3sec.x = sol3sec.x - sol3sec.x(1);
+
+% Solve the equations again.
+
+sol3 = bdesolvetest(lags, sol3sec, tRange(end));
+
+% Solve the equations serially.
+
+solSer3 = bdesolveserialtest(lags, sol3, [sol3.x(1) + max(lagsall) tRange(end) + max(lagsall)]);
+
+% Extract the coincident regions of the two solutions.
+
+[~, solCut3] = bdecut(sol3, solSer3.x(1));
+[solSerCut3, ~] = bdecut(solSer3, tRange(end));
+
+% Calculate the distance between the solutions (i.e. the integration error).
+
+[~, ~, solerr3] = bdedist(solCut3, solSerCut3);
+
+% ------------------------------------------------------------ %
+% -------------------------- TEST 4 -------------------------- % 
+% ------------------------------------------------------------ %
+% Integrate from 12:12 LD limit cycle in 9:15 LD. 
+
+% Extract the last section of the 12:12 LD oscillation to use as the initial 9:15 LD history.
+
+[~, sol3sec] = bdecut(sol3, sol3.x(end) - max(lagsall));
+sol3sec.x = sol3sec.x - sol3sec.x(1);
+
+% Generate the forcing functions.
+
+ldsol1 = ldcyc(sol2sec.x(end), 7.5, 7.5 + p1);
+ldsol2 = ldcyc(sol2sec.x(end), 7.5, 16.5);
+ldsol3 = ldcyc(sol2sec.x(end), 7.5, 7.5 + p3);
+ldsol4 = ldcyc(sol2sec.x(end), 7.5, 7.5 + p4);
+
+% Combine the forcing functions.
+
+ldsol = bdemerge(ldsol1, ldsol2);
+ldsol = bdemerge(ldsol, ldsol3);
+ldsol = bdemerge(ldsol, ldsol4);
+
+% Generate the history.
+
+sol3sec.y(end-3:end,:) = [];
+sol3sec = bdemerge(sol3sec, ldsol);
+
+% Initial integration.
+
+sol4 = bdesolvetest(lags, sol3sec, tRange(end));
+
+% Extract the last section of the oscillation to use as the new LD history.
+
+[~, sol4sec] = bdecut(sol4, sol4.x(end) - max(lagsall));
+sol4sec.x = sol4sec.x - sol4sec.x(1);
+
+% Solve the equations again.
+
+sol4 = bdesolvetest(lags, sol4sec, tRange(end));
+
+% Solve the equations serially.
+
+solSer4 = bdesolveserialtest(lags, sol4, [sol4.x(1) + max(lagsall) tRange(end) + max(lagsall)]);
+
+% Extract the coincident regions of the two solutions.
+
+[~, solCut4] = bdecut(sol4, solSer4.x(1));
+[solSerCut4, ~] = bdecut(solSer4, tRange(end));
+
+% Calculate the distance between the solutions (i.e. the integration error).
+
+[~, ~, solerr4] = bdedist(solCut4, solSerCut4);
+
+% ------------------------------------------------------------ %
+% -------------------------- TEST 5 -------------------------- % 
+% ------------------------------------------------------------ %
+% Integrate from 12:12 LD limit cycle in 15:9 LD. 
+
+% Extract the last section of the 12:12 LD oscillation to use as the initial 15:9 LD history.
+
+% Generate the forcing functions.
+
+ldsol1 = ldcyc(sol2sec.x(end), 4.5, 4.5 + p1);
+ldsol2 = ldcyc(sol2sec.x(end), 4.5, 19.5);
+ldsol3 = ldcyc(sol2sec.x(end), 4.5, 4.5 + p3);
+ldsol4 = ldcyc(sol2sec.x(end), 4.5, 4.5 + p4);
+
+% Combine the forcing functions.
+
+ldsol = bdemerge(ldsol1, ldsol2);
+ldsol = bdemerge(ldsol, ldsol3);
+ldsol = bdemerge(ldsol, ldsol4);
+
+% Generate the history.
+
+sol3sec.y(end-3:end,:) = [];
+sol3sec = bdemerge(sol3sec, ldsol);
+
+% Initial integration.
+
+sol5 = bdesolvetest(lags, sol3sec, tRange(end));
+
+% Extract the last section of the oscillation to use as the new LD history.
+
+[~, sol5sec] = bdecut(sol5, sol5.x(end) - max(lagsall));
+sol5sec.x = sol5sec.x - sol5sec.x(1);
+
+% Solve the equations again.
+
+sol5 = bdesolvetest(lags, sol5sec, tRange(end));
+
+% Solve the equations serially.
+
+solSer5 = bdesolveserialtest(lags, sol5, [sol5.x(1) + max(lagsall) tRange(end) + max(lagsall)]);
+
+% Extract the coincident regions of the two solutions.
+
+[~, solCut5] = bdecut(sol5, solSer5.x(1));
+[solSerCut5, ~] = bdecut(solSer5, tRange(end));
+
+% Calculate the distance between the solutions (i.e. the integration error).
+
+[~, ~, solerr5] = bdedist(solCut5, solSerCut5);
+
+% Return the errors.
+
+solerr = [solerr1 solerr2 solerr3 solerr4 solerr5];
+
+% Gather together the parallel and serial solutions, if required.
+
+if nargout > 1 
+   
+    solcell = {sol1 sol2 sol3 sol4 sol5};
+    
+    if nargout >2 
+       
+        solSercell = {solSer1 solSer2 solSer3 solSer4 solSer5};
+        
+    end
+    
+end
+
+% --------------------------------------- %
+% ----------- SUBFUNCTIONS--------------- %
+% --------------------------------------- %
+
+% Subfunction to generate a Boolean LD cycle.
+
+function sol = ldcyc(tEnd, dawn, dusk)
+
+ncycs = ceil(tEnd/24);
+ftvec = [0 dawn dusk 24];    
+fyvec = [0 1 0 0];
+fyvec = logical(fyvec);
+tvec = ftvec;
+yvec = fyvec;
+    
+for k = 1:(ncycs - 1)        
+    tvec=[tvec(1:end-1) ftvec + 24*k];
+    yvec=[yvec(1:end-1) fyvec];        
+end
+
+in = find(tvec<tEnd);    
+sol.x = [tvec(1:in(end)) tEnd];
+sol.y = [yvec(1:in(end)) yvec(end)];
+    
+end
+
+end
