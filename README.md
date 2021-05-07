@@ -8,4 +8,4 @@ Systems of Boolean Delay Equations (BDEs) – in which time is continuous but st
 
 ## Overview of file structure
 
-\item 
+\ul
