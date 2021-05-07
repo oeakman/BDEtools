@@ -45,3 +45,6 @@ BDEtools is released under the MIT license.
 [9] K. Doherty, K. Alyahya, O.E. Akman, and J.E. Fieldsend. Optimisation and landscape analysis of computational biology models: A case study. In Proc. GECCO 2017, pages 1644–1651, 2017.
 <br>
 [10] O.E. Akman and J.E. Fieldsend. Multi-objective optimisation of gene regulatory networks: Insights from a Boolean circadian clock model. In Proc. BICOB 2020, volume 70, pages 149–162, 2020.
+
+<hr>
+&#169; Akman Laboratory of Automated Biotechnology, 2021
