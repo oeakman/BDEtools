@@ -1,2 +1,4 @@
 # BDEtools
 An open-source MATLAB package for solving sets of Boolean delay equations
+## Introduction
+Systems of Boolean Delay Equations (BDEs) – in which time is continuous but state is binary – are capable of generating surprisingly complex behaviour, despite their apparent simplicity. In addition to simulating convergence to steady states, BDEs can also generate periodic and quasiperiodic oscillations, 𝑚:𝑛 frequency locking and even chaotic dynamics. Furthermore, the enumerability of the Boolean update functions and the compact parametrisation resulting from discretisation means that BDE systems can be readily science and biology. However, a current barrier to the wider adoption of the BDE paradigm by the modelling community is the absence of freely-available software for numerically solving sets of BDEs. BDEtools addresses this issue by enabling 
