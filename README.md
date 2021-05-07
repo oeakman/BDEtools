@@ -4,18 +4,25 @@ An open-source MATLAB package for solving sets of Boolean delay equations
 
 ## Introduction
 
-Systems of Boolean Delay Equations (BDEs) – in which time is continuous but state is binary – are capable of generating surprisingly complex behaviour, despite their apparent simplicity [1,2]. In addition to simulating convergence to steady states, BDEs can also generate periodic and quasiperiodic oscillations, 𝑚:𝑛 frequency locking and even chaotic dynamics [3]. Furthermore, the enumerability of the Boolean update functions and the compact parametrisation resulting from discretisation means that BDE systems can be readily leveraged to generate low-level descriptions of physical systems, from which more quantitative model formulations (e.g. differential equations) can be constructed [4]. The utility of BDE modelling in this regard has been demonstrated in several fields, including computational biology and climate science [4-109], but the use of BDEs is still primarily restricted to a few research laboratories. In order to facilitate the wider adoption of the BDE formalism by the computational modelling community, BDEtools has been developed to enable researchers to construct, solve and analyse BDE systems in a straightforward fashion.
+Systems of Boolean Delay Equations (BDEs) – in which time is continuous but state is binary – are capable of generating surprisingly complex behaviour, despite their apparent simplicity [1,2]. In addition to simulating convergence to steady states, BDEs can also generate periodic and quasiperiodic oscillations, 𝑚:𝑛 frequency locking and even chaotic dynamics [3]. Furthermore, the enumerability of the Boolean update functions and the compact parametrisation resulting from discretisation means that BDE systems can be readily leveraged to generate low-level descriptions of physical systems, from which more quantitative model formulations (e.g. differential equations) can be constructed [4]. The utility of BDE modelling in this regard has been demonstrated in several fields, including computational biology and climate science [4-10], but the use of BDEs is still primarily restricted to a few research laboratories. In order to facilitate the wider adoption of the BDE formalism by the computational modelling community, BDEtools has been developed to enable researchers to construct, solve and analyse BDE systems in a straightforward fashion.
 
 ## Overview of file structure
 
 <ul> 
 <li> <b>code/</b> -- BDEtools solvers and utility routines
-<li> <b>examples/</b> -- three examples illustrating the use of the solvers and utility routines: (i) a simple two-component model that generates accumulating switches [2]; (ii) a climate model of the El-Ni&ntildeo Southern Oscillation [6]; and (iii) a computational biology model of circadian oscillations in the fungus <i>N. crassa [4] </i>  
+<li> <b>examples/</b> -- three examples illustrating the use of the solvers and utility routines: 
+<ol>  
+  <li> a simple two-component model that generates accumulating switches [2]
+  <li> a climate model of the El-Ni&ntildeo Southern Oscillation [6] 
+  <li> a computational biology model of circadian oscillations in the fungus <i>N. crassa [4] </i>  
+</ol>  
 <li> <b>models/</b> -- BDEtools implementations of the circadian clock models presented in [4].
 <li> <b>models/</b> -- unit tests to check the correct impementations of the systems in <b>models/</b>
 </ul>  
 
+## License
 
+BDEtools is released under the MIT license.
 
 ## References
 
