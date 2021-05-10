@@ -112,7 +112,7 @@ figure;
 plot_neurospora_prediction(solDataSer);
 title('Model prediction (serial)');
 
-%Add the data.
+% Add the data.
 
 my_colours = get(gca,'colororder');
 synDataPR = bdePR(synData, 1.1,0.05);
@@ -125,13 +125,13 @@ figure;
 plot_neurospora_prediction(solPar);
 title('Model prediction (parallel)');
 
-%Add the data.
+% Add the data.
 
 synDataPR = bdePR(synData, 1.1,0.05);
 plot(synDataPR.x, synDataPR.y(1,:), '--', 'Color', my_colours(1, :), 'LineWidth', 2);
 plot(synDataPR.x, synDataPR.y(2,:), '--', 'Color', my_colours(2, :), 'LineWidth', 2);
 
-%Calculate the prediction errors.
+% Calculate the prediction errors.
 
 [~, ~, C1] = bdedist(solDataSer_wHist, synData);
 [~, ~, C2] = bdedist(solDataSer_wHist, synData);

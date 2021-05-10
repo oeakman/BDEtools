@@ -56,17 +56,18 @@ function sol = ENSO_example(tEnd)
 % Part of the BDEtools package, © Akman Laboratory of Automated Biotechnology, 2021
 %
 
-% Set the parameter values
+% Set the parameter values.
 
 tau = 0.31;
 beta = 0.17;
 P = 2;
 
-% Set the delys.
+% Set the delays.
 
 lags = [tau, beta, P]; 
 
-% The following history gives the limit cycle solution shown in the paper (this is sensitive to the initial conditions).
+% The following history gives the limit cycle solution shown in the paper 
+% (this is sensitive to the initial conditions).
 
 history = struct;
 history.x = [0 0.15 0.32 0.83 1 1.17 1.48 1.5 1.65 1.67 1.84 2];
