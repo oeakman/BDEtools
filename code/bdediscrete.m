@@ -22,7 +22,7 @@ function sol = bdediscrete(x, y, T, varargin)
 %    to the threshold being equal to the minimum expression level and 1 corresponds to the threshold being equal to the maximum expression level.
 % 
 % varargin{1} -
-% interpfun: A custom interpolation function. The default is inear interpolation between successive points. 
+% interpfun: A custom interpolation function. The default is linear interpolation between successive points. 
 %
 % DEPENDENCIES 
 %
