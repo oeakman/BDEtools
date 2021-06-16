@@ -77,6 +77,16 @@ yticks([0.5, 1.6]);
 yticklabels({'x_1', 'x_2'});
 xlabel('Time, t');
 
+% Calculate the number of jumps per unit time and plot as a function of time.
+
+[njumps, t] = histcounts(sol.x, 0:1:tEnd);
+t(1)=[];
+figure;
+plot(t, njumps, 'Color', 'k', 'LineWidth', 2);
+xlabel('Time, t');
+ylabel('# of jumps per unit time');
+
+
 % --------------------------------------- %
 % ----------- SUBFUNCTIONS--------------- %
 % --------------------------------------- %
