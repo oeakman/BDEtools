@@ -1,7 +1,7 @@
 function sol = chaotic_example(tEnd)
 %function sol = chaotic_example(tEnd)
 %
-% CHAOTIC_EXAMPLE     A Boolean Delay Equation model of a simple negative feedback circuit. The equations are taken from 
+% CHAOTIC_EXAMPLE     The simple Boolean Delay Equation model of Dee & Ghil. The equations are taken from 
 %                     D. Dee & M. Ghil. Boolean difference equations, i: Formulation and dynamic behavior. SIAM J. Appl. Math., 44(1):111?126 (1984),
 %                     and the systen is solved for the parameter values tau_1 = 0.977, tau_2 = 1.
 % 
