@@ -1,4 +1,4 @@
-figure(function [solerr, solcell, solSercell] = neuro1lp_test
+function [solerr, solcell, solSercell] = neuro1lp_test
 % function [solerr, solcell, solSercell] = neuro1lp_test
 %
 % NEURO1LP_TEST   Test function for the BDE solver - 1-loop Neurospora model of Akman et al. 
