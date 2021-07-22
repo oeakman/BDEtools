@@ -174,10 +174,10 @@ my_colours = get(gca,'colororder');
 
 subplot(2, 1, 1);
 plot(xData, yData, 'Marker', 'o', 'LineStyle', 'none', 'LineWidth', 2); % Plot the data. 
-legend('FRQ mRNA', 'FRQ Protein','FRQ threshold','FRQ Protein');
 hold on ;
 plot([0 120], [T1, T1], 'Color', my_colours(1, :), 'LineWidth', 2);
 plot([0 120], [T2, T2], 'Color', my_colours(2, :), 'LineWidth', 2);
+legend('FRQ mRNA', 'FRQ Protein','FRQ mRNA Threshold','FRQ Protein Threshold');
 xlabel('Time, t (h)');
 ylabel('Concentration (nM)');
 title('Neurospora crassa circadian data (with thresholds)');
@@ -219,9 +219,4 @@ yticklabels({'F_M(t)','F_T(t)','L(t)'});
 ylim([0 3.3]);
 xlabel('Time t, (h)');
 ylabel('Activity (1/0)');
-
-
-
-
-
 

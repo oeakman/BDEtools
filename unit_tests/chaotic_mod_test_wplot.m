@@ -4,8 +4,8 @@ function [sol, solSer, solerr] = chaotic_mod_test_wplot
 % CHAOTIC_MOD_TEST_WPLOT   Test function for the BDE solver - chaotic example of Dee et al. 
 %                          This version also plots the parallel & serial solutions for comparison.
 %
-% [sol, solSer, solerr] = chaotic_mod_test
-% [~, ~, solerr] = chaotic_mod_test
+% [sol, solSer, solerr] = chaotic_mod_test_wplot
+% [~, ~, solerr] = chaotic_mod_test_wplot
 %
 % OUTPUTS 
 %

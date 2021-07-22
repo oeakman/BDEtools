@@ -50,6 +50,10 @@ function [solerr, solcell, solSercell] = neuro1lp_test_wplot
 % Written by Ozgur Akman, University of Exeter, 2019
 % O.E.Akman@exeter.ac.uk
 %
+% Code review by Ozgur Akman, University of Exeter, 2021
+%
+% Part of the BDEtools package, © Akman Laboratory of Automated Biotechnology, 2021
+%
 
 % Set the gates to 01.
 
