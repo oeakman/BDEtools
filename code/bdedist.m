@@ -28,7 +28,7 @@ function [d, nd, mnd] = bdedist(sol1, varargin)
 % sol2.x: A vector with the times of switch points.
 % sol2.y: A Boolean matrix with n rows where n is the number of state variables. Each column is the state following each switch.
 %
-% DEPENDENCIES 
+% DEPENDENCIES
 %
 % None.
 %
