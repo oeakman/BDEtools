@@ -69,7 +69,7 @@ for k = pickvars
         x2=ksol.x(xpairs(2,j));
         xvert=[x1 x2 x2 x1];
         yvert=[cnt cnt cnt-1 cnt-1];
-        patch(xvert,yvert,'k');   
+        patch(xvert, yvert, 'k');   
         plot([sol.x(1) sol.x(end)], [cnt-1 cnt-1],'k');
         
     end
