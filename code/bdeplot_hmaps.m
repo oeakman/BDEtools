@@ -3,10 +3,10 @@ function bdeplot_hmaps(sol, varargin)
 %
 % BDEPLOT_HMAPS   Plot multiple Boolean timeseries as black and white heatmaps.
 %
-% bdeplot(sol)
-% bdeplot(sol, pickvars)
-% bdeplot(sol, pickvars, yticklabels)
-% bdeplot(sol, [], yticklabels)
+% bdeplot_hmaps(sol)
+% bdeplot_hmaps(sol, pickvars)
+% bdeplot_hmaps(sol, pickvars, yticklabels)
+% bdeplot_hmaps(sol, [], yticklabels)
 %
 % OUTPUTS
 %
