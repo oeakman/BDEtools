@@ -55,7 +55,7 @@ BDEtools is released under the MIT license.
 
 [1] D. Dee and M. Ghil. Boolean difference equations, i: Formulation and dynamic behavior. SIAM J. Appl. Math., 44(1):111–126, 1984. 
 <br>
-[2] M. Ghil and A. Mullhaupt. Boolean delay equations. ii. periodic and ape- riodic solutions. J. Stat. Phys., 41(1):125–173, 1985.
+[2] M. Ghil and A. Mullhaupt. Boolean delay equations. ii. periodic and aperiodic solutions. J. Stat. Phys., 41(1):125–173, 1985.
 <br>
 [3] M. Ghil, I. Zaliapin, and B. Coluzzi. Boolean delay equations: A simple way of looking at complex systems. Physica D, 237(23):2967–2986, 2008.
 <br>
