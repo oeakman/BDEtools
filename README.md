@@ -63,7 +63,7 @@ BDEtools is released under the MIT license.
 <br>
 [5] M. Ghil, A. Mullhaupt, and P. Pestiaux. Deep water formation and quaternary glaciations. Climate Dynamics, 2(1):1–10, 1987.
 <br>
-[6] A. Saunders and M. Ghil. A Boolean delay equation model of ENSO variability. Physica D, 160:54–78, 2001.
+[6] A. Saunders and M. Ghil. A Boolean delay equation model of ENSO variability. Physica D, 160(1–2):54–78, 2001.
 <br>
 [7] H. Öktem, R. Pearson, and K. Egiazarian. An adjustable aperiodic model class of genomic interactions using continuous time Boolean networks (Boolean delay equations). Chaos, 13(4):1167–1174, 2003.
 <br>
