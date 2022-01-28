@@ -55,7 +55,7 @@ BDEtools is released under the MIT license.
 
 [1] D. Dee and M. Ghil. Boolean difference equations, i: Formulation and dynamic behavior. SIAM J. Appl. Math., 44(1):111–126, 1984. 
 <br>
-[2] M. Ghil and A. Mullhaupt. Boolean delay equations. ii. periodic and ape- riodic solutions. J. Stat. Phys., 41(1):125–173, 1985.
+[2] M. Ghil and A. Mullhaupt. Boolean delay equations. ii. periodic and aperiodic solutions. J. Stat. Phys., 41(1):125–173, 1985.
 <br>
 [3] M. Ghil, I. Zaliapin, and B. Coluzzi. Boolean delay equations: A simple way of looking at complex systems. Physica D, 237(23):2967–2986, 2008.
 <br>
@@ -63,7 +63,7 @@ BDEtools is released under the MIT license.
 <br>
 [5] M. Ghil, A. Mullhaupt, and P. Pestiaux. Deep water formation and quaternary glaciations. Climate Dynamics, 2(1):1–10, 1987.
 <br>
-[6] A. Saunders and M. Ghil. A Boolean delay equation model of ENSO variability. Physica D, 160:54–78, 2001.
+[6] A. Saunders and M. Ghil. A Boolean delay equation model of ENSO variability. Physica D, 160(1–2):54–78, 2001.
 <br>
 [7] H. Öktem, R. Pearson, and K. Egiazarian. An adjustable aperiodic model class of genomic interactions using continuous time Boolean networks (Boolean delay equations). Chaos, 13(4):1167–1174, 2003.
 <br>
