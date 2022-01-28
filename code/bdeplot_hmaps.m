@@ -7,6 +7,7 @@ function bdeplot_hmaps(sol, varargin)
 % bdeplot_hmaps(sol, pickvars)
 % bdeplot_hmaps(sol, pickvars, yticklabels)
 % bdeplot_hmaps(sol, [], yticklabels)
+% bdeplot_hmaps(sol, [], [])
 %
 % OUTPUTS
 %
@@ -21,7 +22,7 @@ function bdeplot_hmaps(sol, varargin)
 % varargin{1} -
 % pickvars: A vector indexing the state variables to plot. The default is to plot all variables. 
 % varargin{2} -
-% yticklabels: A cell string containing variable labels (e.g. yticklabels = {'x_1','x_2',...'x_n',}). 
+% yticklabels: A cell string containing variable labels (e.g. yticklabels = {'x_1','x_2',...'x_n',}). The default is to plot the row number.
 %
 % DEPENDENCIES 
 %
@@ -41,6 +42,17 @@ if nargin > 1 && ~isempty(varargin{1})
     pickvars = varargin{1};    
 else     
     pickvars = 1:size(sol.y, 1);    
+end
+
+% Set the default labels (row numbers).
+
+if nargin > 2 && ~isempty(varargin{3})    
+    yticklabels = varargin{2};    
+else         
+    numr = 1:size(sol.y, 1);
+    numr = numr(:);
+    str = num2str(numr);
+    yticklabels = cellstr(str)';
 end
 
 if ~ishold
@@ -85,13 +97,10 @@ yticks = 1:length(pickvars);
 yticks = yticks-0.5;
 set(gca,'YTick', yticks);
 
-% If requested, label the timeseries.
+% Label the timeseries.
 
-if nargin > 2
-    yticklabels = varargin{2};
-    yticklabels = yticklabels(end:-1:1);
-    set(gca, 'YTickLabel', yticklabels);
-end
+yticklabels = yticklabels(end:-1:1);
+set(gca, 'YTickLabel', yticklabels);
 
 % Set the x-axis limits.
 
