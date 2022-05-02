@@ -22,7 +22,7 @@ function bdeplot_hmaps(sol, varargin)
 % varargin{1} -
 % pickvars: A vector indexing the state variables to plot. The default is to plot all variables. 
 % varargin{2} -
-% yticklabels: A cell string containing variable labels (e.g. yticklabels = {'x_1','x_2',...'x_n',}). The default is to plot the row number.
+% yticklabels: A cell string containing variable labels (e.g. yticklabels = {'x_1','x_2',...'x_n'}). The default is to plot the row number.
 %
 % DEPENDENCIES 
 %
@@ -46,7 +46,7 @@ end
 
 % Set the default labels (row numbers).
 
-if nargin > 2 && ~isempty(varargin{3})    
+if nargin > 2 && ~isempty(varargin{2})    
     yticklabels = varargin{2};    
 else         
     numr = 1:size(sol.y, 1);
