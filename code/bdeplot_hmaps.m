@@ -92,7 +92,7 @@ end
 
 % Set the y-axis tick marks.
 
-box on;
+set(gca, 'Box', 'On');`
 yticks = 1:length(pickvars);
 yticks = yticks-0.5;
 set(gca,'YTick', yticks);
