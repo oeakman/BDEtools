@@ -51,9 +51,10 @@ sol2 = bdesep(sol, setdiff(1:size(sol.y,1), yvar));
 dx = diff(sol1.x);
 in = find(dx<xtol);
 
-%If any of these occur at the beginning of the time interval, ignore.
+%If any of these occur at the beginning or end of the time interval, ignore.
 
 in(in<2) = [];
+in(in>(length(sol1.x)-2)) = [];
 
 if ~isempty(in)
     din = [in in+1];
